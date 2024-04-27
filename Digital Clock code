@@ -1,0 +1,27 @@
+import time
+
+def digital_clock():
+    # Set initial time to 10:46 AM Indian Standard Time (IST)
+    initial_time = time.strptime("10:46:00 AM", "%I:%M:%S %p")
+    initial_epoch = time.mktime(initial_time)
+
+    while True:
+        # Get current time in UTC
+        current_epoch = time.time()
+        ist_epoch = current_epoch + (5.5 * 3600)  # Add 5 hours and 30 minutes for IST
+        current_time = time.localtime(ist_epoch)
+
+        # Calculate hours, minutes, seconds
+        hour = str(current_time.tm_hour).zfill(2)  # Zero-padding
+        minute = str(current_time.tm_min).zfill(2)
+        second = str(current_time.tm_sec).zfill(2)
+
+        # Adjust AM/PM
+        am_pm = "AM" if current_time.tm_hour < 12 else "PM"
+
+        # Print the time in HH:MM:SS AM/PM format
+        print(f"\r{hour}:{minute}:{second} {am_pm} (IST)", end="", flush=True)
+        time.sleep(1)  # Update every second
+
+if __name__ == "__main__":
+    digital_clock()
